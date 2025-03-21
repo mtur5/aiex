@@ -18,7 +18,7 @@ hide_streamlit_style = """
         footer {visibility: hidden;}
         header {visibility: hidden;}
         .viewerBadge_link__qRIco {display: none;}  /* "View all apps" のリンクを非表示 */
-        .stDeployButton {display: none;}  /* 🚨 右下の「Manage App」ボタンを非表示 */
+        div[data-testid="stToolbar"] {display: none !important;}  /* 右下の「Manage App」ボタンを非表示 */
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
