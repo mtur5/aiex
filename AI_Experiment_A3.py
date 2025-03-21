@@ -186,8 +186,8 @@ import json
 import gspread
 from google.oauth2.service_account import Credentials
 
-# 🔹 Secrets の内容を確認
-st.write("Secrets:", st.secrets)
+# 🔹 Streamlit Secrets から `private_key` を取得して表示
+st.write("Private Key:", st.secrets["gspread_service_account"]["private_key"])
 
 # Google 認証情報を `st.secrets` から取得
 service_account_info = st.secrets["gspread_service_account"]
