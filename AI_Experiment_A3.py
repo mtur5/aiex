@@ -192,9 +192,7 @@ service_account_info = st.secrets["gspread_service_account"]
 credentials = Credentials.from_service_account_info(service_account_info)
 client = gspread.authorize(credentials)
 
-# Google スプレッドシートを開く
-spreadsheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"])
-worksheet = spreadsheet.sheet1
+
 
 # 🔹 Streamlit Secrets から `gspread_service_account` を取得
 try:
@@ -217,6 +215,10 @@ except KeyError as e:
     st.error(f"❌ `Secrets` に `{e}` がありません。")
 except Exception as e:
     st.error(f"❌ 予期しないエラー: {e}")
+
+# Google スプレッドシートを開く
+spreadsheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"])
+worksheet = spreadsheet.sheet1
 
 # ✅ Googleスプレッドシートにデータを保存
 st.markdown('<style>.stButton>button {background-color: blue; color: white; font-weight: bold;}</style>', unsafe_allow_html=True)
