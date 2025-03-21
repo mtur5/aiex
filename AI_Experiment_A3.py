@@ -203,11 +203,6 @@ try:
     # Google Sheets に接続
     spreadsheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"])
     
-    st.write("✅ Google Sheets への接続成功！")
-
-except Exception as e:
-    st.error(f"❌ エラー: {e}")
-
 worksheet = spreadsheet.sheet1
 
 # ✅ Googleスプレッドシートにデータを保存
