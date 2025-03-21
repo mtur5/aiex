@@ -182,8 +182,12 @@ try:
     # Streamlit Secrets から認証情報を取得
     service_account_info = st.secrets["gspread_service_account"]
     
-    # ✅ スコープを指定して Credentials を作成
-    credentials = Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
+    # ✅ スコープを設定して Credentials を作成
+    credentials = Credentials.from_service_account_info(
+        service_account_info, 
+        scopes=["https://www.googleapis.com/auth/spreadsheets"]
+    )
+
     
     # gspread クライアントを作成
     client = gspread.authorize(credentials)
