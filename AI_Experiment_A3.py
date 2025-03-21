@@ -186,8 +186,6 @@ import json
 import gspread
 from google.oauth2.service_account import Credentials
 
-# 🔹 Streamlit Secrets から `private_key` を取得して表示
-st.write("Private Key:", st.secrets["gspread_service_account"]["private_key"])
 
 # Google 認証情報を `st.secrets` から取得
 service_account_info = st.secrets["gspread_service_account"]
@@ -198,14 +196,27 @@ client = gspread.authorize(credentials)
 spreadsheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"])
 worksheet = spreadsheet.sheet1
 
-# 🔹 Google 認証情報を取得
-if "gspread_service_account" in st.secrets:
+# 🔹 Streamlit Secrets から `gspread_service_account` を取得
+try:
     service_account_info = st.secrets["gspread_service_account"]
+    st.write("✅ gspread_service_account 読み取り成功:", service_account_info)
+
+    # 🔹 Google 認証情報を取得
     credentials = Credentials.from_service_account_info(service_account_info)
+    st.write("✅ 認証情報の取得成功")
+
+    # 🔹 gspread クライアントを作成
     client = gspread.authorize(credentials)
-else:
-    st.error("エラー: `gspread_service_account` が Secrets に設定されていません。")
-    st.stop()
+    st.write("✅ gspread クライアント作成成功")
+
+    # 🔹 Google スプレッドシートを開く
+    spreadsheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"])
+    st.write("✅ Google スプレッドシートへの接続成功")
+
+except KeyError as e:
+    st.error(f"❌ `Secrets` に `{e}` がありません。")
+except Exception as e:
+    st.error(f"❌ 予期しないエラー: {e}")
 
 # ✅ Googleスプレッドシートにデータを保存
 st.markdown('<style>.stButton>button {background-color: blue; color: white; font-weight: bold;}</style>', unsafe_allow_html=True)
