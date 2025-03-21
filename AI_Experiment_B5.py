@@ -18,7 +18,9 @@ hide_streamlit_style = """
         footer {visibility: hidden;}
         header {visibility: hidden;}
         .viewerBadge_link__qRIco {display: none;}  /* "View all apps" のリンクを非表示 */
-        div[data-testid="stToolbar"] {display: none !important;}  /* 右下の「Manage App」ボタンを非表示 */
+        div[data-testid="stToolbar"] {display: none !important;}  /* 🚨 Manage App を強制的に非表示 */
+        iframe[title="streamlit_app"] {display: none !important;}  /* 🚨 一部の管理ツールも非表示 */
+        button[kind="icon"] {display: none !important;}  /* 🚨 不要なボタンをすべて非表示 */
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
