@@ -184,8 +184,7 @@ st.write("終わったら「実験Aの結果を保存して終了」青いボタ
 
 import json
 import gspread
-from google.oauth2.service_account import Credentials
-
+from google.oauth2.service_account import Credentials  # ✅ ここが必要
 
 # ✅ 必須のスコープを明示的に設定
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
@@ -203,7 +202,7 @@ try:
     # Google Sheets に接続
     spreadsheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"])
     
-worksheet = spreadsheet.sheet1
+    worksheet = spreadsheet.worksheet("Sheet1")  # sheet1ではなく、シート名を指定
 
 # ✅ Googleスプレッドシートにデータを保存
 st.markdown('<style>.stButton>button {background-color: blue; color: white; font-weight: bold;}</style>', unsafe_allow_html=True)
