@@ -191,7 +191,10 @@ try:
     # Google Sheets に接続
     spreadsheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"])
 
-worksheet = spreadsheet.sheet2
+    worksheet = spreadsheet.worksheet("Sheet2")  # sheet2ではなく、シート名を指定
+
+except Exception as e:
+    st.error(f"❌ Google Sheets 接続エラー: {e}")
 
 # ✅ Googleスプレッドシートにデータを保存
 st.markdown('<style>.stButton>button {background-color: blue; color: white; font-weight: bold;}</style>', unsafe_allow_html=True)
