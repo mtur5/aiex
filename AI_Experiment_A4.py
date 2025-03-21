@@ -204,6 +204,9 @@ try:
     
     worksheet = spreadsheet.worksheet("Sheet1")  # sheet1ではなく、シート名を指定
 
+except Exception as e:
+    st.error(f"❌ Google Sheets 接続エラー: {e}")
+
 # ✅ Googleスプレッドシートにデータを保存
 st.markdown('<style>.stButton>button {background-color: blue; color: white; font-weight: bold;}</style>', unsafe_allow_html=True)
 if st.button("実験Aの結果を保存して終了"):
