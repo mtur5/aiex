@@ -3,16 +3,24 @@ import openai
 import pandas as pd
 import os
 
-# ✅ 右上のメニューを非表示にする（これを追加！）
+# ✅ これを一番最初に書く！
+st.set_page_config(
+    page_title="My App",
+    page_icon="🚀",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+
+# ✅ 右上のメニューを非表示
 hide_streamlit_style = """
     <style>
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
         header {visibility: hidden;}
+        .viewerBadge_link__qRIco {display: none;}  /* "View all apps" を非表示 */
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-st.set_page_config(page_title="My App", page_icon="🚀", layout="wide", initial_sidebar_state="collapsed")
 
 # OpenAI APIキーを取得
 openai.api_key = st.secrets["OPENAI_API_KEY"]
