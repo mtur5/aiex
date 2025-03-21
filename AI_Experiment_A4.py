@@ -6,7 +6,7 @@ import os
 
 # OpenAI APIキーを取得
 openai.api_key = st.secrets["OPENAI_API_KEY"]
-
+client = openai.Client()  # ← `client` を正しく定義
 
 # データ保存リスト
 if "history" not in st.session_state:
