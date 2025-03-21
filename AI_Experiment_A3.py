@@ -187,37 +187,27 @@ import gspread
 from google.oauth2.service_account import Credentials
 
 
-# Google 認証情報を `st.secrets` から取得
-service_account_info = st.secrets["gspread_service_account"]
-credentials = Credentials.from_service_account_info(service_account_info)
-client = gspread.authorize(credentials)
+# ✅ 必須のスコープを明示的に設定
+SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-
-
-# 🔹 Streamlit Secrets から `gspread_service_account` を取得
 try:
+    # Streamlit Secrets から認証情報を取得
     service_account_info = st.secrets["gspread_service_account"]
-    st.write("✅ gspread_service_account 読み取り成功:", service_account_info)
-
-    # 🔹 Google 認証情報を取得
-    credentials = Credentials.from_service_account_info(service_account_info)
-    st.write("✅ 認証情報の取得成功")
-
-    # 🔹 gspread クライアントを作成
+    
+    # ✅ スコープを指定して Credentials を作成
+    credentials = Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
+    
+    # gspread クライアントを作成
     client = gspread.authorize(credentials)
-    st.write("✅ gspread クライアント作成成功")
-
-    # 🔹 Google スプレッドシートを開く
+    
+    # Google Sheets に接続
     spreadsheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"])
-    st.write("✅ Google スプレッドシートへの接続成功")
+    
+    st.write("✅ Google Sheets への接続成功！")
 
-except KeyError as e:
-    st.error(f"❌ `Secrets` に `{e}` がありません。")
 except Exception as e:
-    st.error(f"❌ 予期しないエラー: {e}")
+    st.error(f"❌ エラー: {e}")
 
-# Google スプレッドシートを開く
-spreadsheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"])
 worksheet = spreadsheet.sheet1
 
 # ✅ Googleスプレッドシートにデータを保存
